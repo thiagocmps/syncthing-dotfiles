@@ -1,5 +1,6 @@
 #!/bin/bash
 SYNC_DIR_NAME='synced-directories'
+  
 
 # 1. Detectar o Sistema Operacional
 OS="$(uname -s)"
@@ -42,6 +43,8 @@ esac
 # 2. Criar o diretório de sincronização se não existir
 mkdir -p "$SYNC_PATH"
 
+
+
 # 3. Validar se o Syncthing já gerou o config.xml inicial
 if [ ! -f "$CONFIG_DIR/config.xml" ]; then
   echo "Erro: config.xml não encontrado. Inicie o Syncthing uma vez para gerar o arquivo base."
@@ -60,6 +63,7 @@ echo "Configurando a pasta no diretório: $CONFIG_DIR"
 # Pegar a API Key automaticamente do arquivo de configuração
 API_KEY=$(grep -oP '(?<=<apikey>)[^<]+' "$CONFIG_DIR/config.xml")
 
+echo "API KEY IS: $API_KEY"
 # Adicionar a pasta via API enviando um JSON com o caminho correto detectado pelo script
 
 #essa é a mais pesada, pra testes eu vou usar a do doom emacs
