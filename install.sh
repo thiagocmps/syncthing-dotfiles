@@ -9,7 +9,7 @@ case "${OS}" in
     # Verifica se é Android (Termux) ou Linux Desktop
     if [ -d "/data/data/com.termux" ]; then
       echo "Detectado: Android (Termux)"
-      CONFIG_DIR="$HOME/.config/syncthing"
+      CONFIG_DIR="$HOME/.local/state/syncthing"
       SYNC_PATH="$HOME/Storage/$SYNC_DIR_NAME"
     else
       echo "Detectado: Linux"
@@ -77,7 +77,7 @@ echo "API KEY IS: $API_KEY"
 curl -X POST -H "X-API-Key: $API_KEY" -d '{
   "id": "'"$EMACS_ID"'",
   "label": "emacs-dir",
-  "path": "'"$SYNC_PATH"'/emacs",
+  "path": "'"$SYNC_PATH"'/doom-emacs",
   "type": "sendreceive"
 }' http://127.0.0.1:8384/rest/config/folders
 
