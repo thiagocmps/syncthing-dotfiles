@@ -77,7 +77,7 @@ echo "API KEY IS: $API_KEY"
 curl -X POST -H "X-API-Key: $API_KEY" -d '{
   "id": "'"$EMACS_ID"'",
   "label": "emacs-dir",
-  "path": "'"$SYNC_PATH/emacs"'",
+  "path": "'"$SYNC_PATH"'/emacs",
   "type": "sendreceive"
-}' http://127.0.0.1:8384
+}' http://127.0.0.1:8384/rest/config/folders
 
