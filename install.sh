@@ -84,7 +84,7 @@ case "${OS}" in
 esac
 
 if ! command -v syncthing; then
-  "$PKG_MANAGER" syncthing
+  $PKG_MANAGER syncthing
 fi
 
 case "$THIS_OS_TYPE" in
