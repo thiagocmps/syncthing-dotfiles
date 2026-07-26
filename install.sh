@@ -121,12 +121,12 @@ echo "API KEY IS: $API_KEY"
 # Adicionar a pasta via API enviando um JSON com o caminho correto detectado pelo script
 
 #essa é a mais pesada, pra testes eu vou usar a do doom emacs
-#curl -X POST -H "X-API-Key: $API_KEY" -d '{
-#  "id": "'"$COLD_BACKUP_ID"'",
-#  "label": "cold-backup",
-#  "path": "'"$SYNC_PATH"'",
-#  "type": "send"
-#}' http://127.0.0.1
+curl -X POST -H "X-API-Key: $API_KEY" -d '{
+  "id": "'"$COLD_BACKUP_ID"'",
+  "label": "cold-backup-dir",
+  "path": "'"$SYNC_PATH"'/cold-backup",
+  "type": "send"
+}' http://127.0.0.1:8384/rest/config/folders
 
 curl -X POST -H "X-API-Key: $API_KEY" -d '{
   "id": "'"$EMACS_ID"'",
@@ -135,3 +135,16 @@ curl -X POST -H "X-API-Key: $API_KEY" -d '{
   "type": "sendreceive"
 }' http://127.0.0.1:8384/rest/config/folders
 
+curl -X POST -H "X-API-Key: $API_KEY" -d '{
+  "id": "'"$DRAWINGS_ID"'",
+  "label": "drawings-dir",
+  "path": "'"$SYNC_PATH"'/drawings",
+  "type": "sendreceive"
+}' http://127.0.0.1:8384/rest/config/folders
+
+curl -X POST -H "X-API-Key: $API_KEY" -d '{
+  "id": "'"$OBSIDIAN_ID"'",
+  "label": "obsidian-dir",
+  "path": "'"$SYNC_PATH"'/obsidian",
+  "type": "sendreceive"
+}' http://127.0.0.1:8384/rest/config/folders
