@@ -16,7 +16,7 @@ case "${OS}" in
       echo "Detectado: Android (Termux)"
       THIS_OS_TYPE="TERMUX"
       CONFIG_DIR="$HOME/.local/state/syncthing"
-      SYNC_PATH="$HOME/Storage/$SYNC_DIR_NAME"
+      SYNC_PATH="$HOME/storage/shared/$SYNC_DIR_NAME"
       PKG_MANAGER="pkg install -y"
     else
       echo "Detectado: Linux"
@@ -121,24 +121,38 @@ echo "API KEY IS: $API_KEY"
 # Adicionar a pasta via API enviando um JSON com o caminho correto detectado pelo script
 
 #essa é a mais pesada, pra testes eu vou usar a do doom emacs
-curl -X POST -H "X-API-Key: $API_KEY" -d '{
-  "id": "'"$COLD_BACKUP_ID"'",
-  "label": "cold-backup-dir",
-  "path": "'"$SYNC_PATH"'/cold-backup",
-  "type": "send"
-}' http://127.0.0.1:8384/rest/config/folders
+
+
+echo "Deseja syncronizar 'cold-backup-dir'? (S/s|N/n)"
+read INPUT_BACKUP
+
+if [[ "$INPUT_BACKUP" == "S" || "$INPUT_BACKUP" == "s" ]]; then
+  echo "Sincronizando em cold-backup..."
+  curl -X POST -H "X-API-Key: $API_KEY" -d '{
+    "id": "'"$COLD_BACKUP_ID"'",
+    "label": "cold-backup-dir",
+    "path": "'"$SYNC_PATH"'/cold-backup",
+    "type": "send"
+  }' http://127.0.0.1:8384/rest/config/folders
+fi
+
+echo "Deseja sincronizar 'drawings-dir'? (S/s|N/n)"
+read INPUT_DRAWINGS
+
+if [[ $INPUT_DRAWINGS == "S" || $INPUT_DRAWINGS == "s" ]]; then 
+  echo "Sincronizando em drawings..."
+  curl -X POST -H "X-API-Key: $API_KEY" -d '{
+    "id": "'"$DRAWINGS_ID"'",
+    "label": "drawings-dir",
+    "path": "'"$SYNC_PATH"'/drawings",
+    "type": "sendreceive"
+  }' http://127.0.0.1:8384/rest/config/folders
+fi
 
 curl -X POST -H "X-API-Key: $API_KEY" -d '{
   "id": "'"$EMACS_ID"'",
   "label": "emacs-dir",
   "path": "'"$SYNC_PATH"'/doom-emacs",
-  "type": "sendreceive"
-}' http://127.0.0.1:8384/rest/config/folders
-
-curl -X POST -H "X-API-Key: $API_KEY" -d '{
-  "id": "'"$DRAWINGS_ID"'",
-  "label": "drawings-dir",
-  "path": "'"$SYNC_PATH"'/drawings",
   "type": "sendreceive"
 }' http://127.0.0.1:8384/rest/config/folders
 
